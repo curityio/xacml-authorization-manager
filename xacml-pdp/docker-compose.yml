@@ -1,0 +1,28 @@
+---
+version: '3.4'
+
+services:
+  
+  pdp:
+    # depends_on:
+    #  - iam
+    image: authzforce/restful-pdp:4.0.1
+        
+    ports:
+     - "8080:8080"
+     
+    environment:
+      # Variable to customize JVM options
+      JAVA_OPTS: "-Dloader.path=/extensions -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true -Djavax.xml.accessExternalSchema=all -Xms512m -Xmx1024m -server"
+     
+    volumes:
+     # The source path is given as example here. If you want to use AuthzForce PDP extensions, replace it with the path to the folder where you have the extension(s) JAR(s) with all dependencies that are not already part of the Docker image (i.e. that are not already dependencies of Maven artifact 'authzforce-ce-restful-pdp-cxf-spring-boot-server').
+     - ./pdp/extensions:/extensions:ro
+     
+     # Volume used to customize global Spring Boot settings (e.g. disable SSL or modify SSL settings), or change app-specific configuration (e.g. logging in 'logback.xml' file).
+     - ./pdp/conf:/conf:ro
+     # The wait-for-command script is needed when using the custom command down below.
+     - ./wtfc.sh:/wtfc.sh
+      
+    # The custom command below is useful when you need to wait for another service to be fully operational (healthcheck on 'iam' server, port 443, in this case), before running this one 
+    # command: sh -c "/wtfc.sh --progress --timeout=120 --interval=10 --status=0 nc -w 5 -vz iam 443 && java $${JAVA_OPTS} -jar /app.jar --spring.config.location=file:/conf/application.yml"

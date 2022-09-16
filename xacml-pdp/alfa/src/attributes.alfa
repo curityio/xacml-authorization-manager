@@ -1,0 +1,40 @@
+namespace authz.manager.curity.io {
+
+    attribute group {
+        id = "group"
+        type = string
+        category = subjectCat
+    }
+
+    attribute resourceType {
+        id = "resourceType"
+        type = string
+        category = resourceCat
+    }
+
+    attribute apiAction {
+        id = "apiAction"
+        type = string
+        category = actionCat
+    }
+
+    attribute status {
+        id = "status"
+        type = boolean
+        category = resourceCat
+    }
+    
+    attribute name {
+        id = "name"
+        type = boolean
+        category = resourceCat
+    }
+    
+    attribute phoneNumbers {
+        id = "phoneNumbers"
+        type = boolean
+        category = resourceCat
+    }
+
+    obligation curityFilters = "curity-filters"
+}
