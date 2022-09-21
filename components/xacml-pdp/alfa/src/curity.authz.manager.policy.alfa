@@ -16,22 +16,22 @@ namespace authz.manager.curity.io{
                 apply firstApplicable
 
                 rule read{
-                    target clause apiAction == "read" or apiAction == "GET"
+                    target clause apiAction == "GET"
                     permit
                 }
 
                 rule create{
-                    target clause apiAction == "create" or apiAction == "POST"
+                    target clause apiAction == "POST"
                     permit
                 }
 
                 rule update{
-                    target clause apiAction == "update" or apiAction == "PUT"
+                    target clause apiAction == "PUT"
                     permit
                 }
 
                 rule delete{
-                    target clause apiAction == "delete" or apiAction == "DELETE"
+                    target clause apiAction == "DELETE"
                     permit
                 }
             }
@@ -43,18 +43,13 @@ namespace authz.manager.curity.io{
                 apply firstApplicable
 
                 rule read{
-                    target clause apiAction == "read" or apiAction == "GET"
+                    target clause apiAction == "POST"
                     permit
                     on permit {
                         obligation curityFilters{
-                            status = false
+                            status = true
                         }   
                     }
-                }
-
-                rule create{
-                    target clause apiAction == "create" or apiAction == "POST"
-                    permit
                 }
             }
         }
@@ -72,22 +67,22 @@ namespace authz.manager.curity.io{
                 apply firstApplicable
 
                 rule read{
-                    target clause apiAction == "read" or apiAction == "GET"
+                    target clause apiAction == "GET"
                     permit
                 }
 
                 rule create{
-                    target clause apiAction == "create" or apiAction == "POST"
+                    target clause apiAction == "POST"
                     permit
                 }
 
                 rule update{
-                    target clause apiAction == "update" or apiAction == "PUT"
+                    target clause apiAction == "PUT"
                     permit
                 }
 
                 rule delete{
-                    target clause apiAction == "delete" or apiAction == "DELETE"
+                    target clause apiAction == "DELETE"
                     permit
                 }
             }
@@ -99,7 +94,7 @@ namespace authz.manager.curity.io{
                 apply firstApplicable
 
                 rule read{
-                    target clause apiAction == "read" or apiAction == "GET"
+                    target clause apiAction == "POST"
                     permit
                     on permit {
                         obligation curityFilters{
@@ -107,11 +102,6 @@ namespace authz.manager.curity.io{
                             name = true
                         }   
                     }
-                }
-
-                rule create{
-                    target clause apiAction == "create" or apiAction == "POST"
-                    permit
                 }
             }
         }

@@ -1,0 +1,7 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+target
+.DS_Store
+components/idsvr/license.json
+.idea/
+build.sh

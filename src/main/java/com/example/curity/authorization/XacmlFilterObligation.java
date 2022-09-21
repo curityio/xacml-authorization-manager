@@ -7,7 +7,6 @@ import se.curity.identityserver.sdk.authorization.GraphQLObligation;
 import se.curity.identityserver.sdk.authorization.ObligationAlterationResult;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 class XacmlFilterObligation implements GraphQLObligation.CanReadAttributes {
@@ -31,14 +30,12 @@ class XacmlFilterObligation implements GraphQLObligation.CanReadAttributes {
     @Override
     public ObligationAlterationResult<ResourceAttributes<?>> filterReadAttributes(Input input) {
         ResourceAttributes returnAttributes = input.getResourceAttributes();
+
         for (Object s : _attributesToFilter)
         {
             returnAttributes = returnAttributes.removeAttribute(s.toString());
         }
-//        return Optional.ofNullable(returnAttributes);
-        return ObligationAlterationResult.of(returnAttributes);
 
-        /* Something like this would be better but couldn't get it to work */
-//        return Optional.ofNullable(input.getResourceAttributes().filter(ResourceQuery.Exclusions.of(_attributesToFilter)));
+        return ObligationAlterationResult.of(returnAttributes);
     }
 }
