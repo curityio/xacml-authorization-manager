@@ -36,6 +36,7 @@ services:
 
   pdp:
     image: authzforce/restful-pdp:4.0.1  
+    hostname: xacml-pdp
     ports:
      - "8080:8080"
     environment:

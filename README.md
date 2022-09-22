@@ -51,13 +51,46 @@ In order to protect the DCR GraphQL API the Authorization Manager needs to be ad
 ### User Management GraphQL API
 In order to protect the User Management GraphQL API the Authorization Manager needs to be added to the User Management Profile. Navigate to `User Management` -> `General`, in the drop-down for Authorization Manager, choose the newly created Authorization Manager (`my-xacml-authz-manager` in the example above).
 
-## XACML PDP for testing
+## Testing
 
-The project includes a docker compose file to start a [AuthzForce XACML PDP](https://github.com/authzforce/restful-pdp).
+The repository contains a docker compose file that will run an instance of the Curity Identity Server, a data source with test data and an [AuthzForce XACML PDP](https://github.com/authzforce/restful-pdp). Running this environment will provide a fully configured environment that can be used to test the use cases and the plugin.
 
-From the xacml-pdp directory run `docker compose up` to run a dockerized instance of a PDP. This will expose the PDP on port 8080 by default but can be changed in pdp/conf/application.yml (and docker-compose.yml). 
+A scipt is available that will build and deploy the XACML Authorization Manager Plugin and start the docker containers. Run `/deploy.sh` to get everything up and running. Run `./teardown.sh` to stop and remove all the containers.
 
-DEBUG logging is enabled for the PDP.
+**NOTE** DEBUG logging is enabled for the Curity Identity Server and the XACML PDP.
+
+1. Using [OAUth.tools](https://oauth.tools/), initiate a code flow using the `xacml-demo` client (secret is `Password1`).
+2. Log in with a user, `admin` or `demouser` (by default both have the password `Password1`). The `admin` user belongs to the group `admin` that has full access to the GraphQL APIs. The `demouser` belongs to the `devops` group that is subject to filtration of certain fields for both DCR and User Management data. This should be clear when reviewing the policy used by the XACML PDP. Note that the group cliam is issued by default per the configuration.
+3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or GraphiQL, construct a query and add the JWT in the `Authorize` header.
+
+### Example User Query
+```json
+query getAccounts
+{
+   accounts(first: 5) {
+    edges {
+      node {
+        id
+        name {
+          givenName
+          middleName
+          familyName
+        }
+        title
+        active
+        emails {
+          value
+          primary
+        }
+        phoneNumbers {
+          value
+          primary
+        }
+      }
+    }
+  }
+}
+```
 
 ### XACML Policies
 The policies are written in [ALFA](https://en.wikipedia.org/wiki/ALFA_(XACML)) and available in xacml-pdp/alfa. They are compiled into XACML artifacts using a [Visual Studio Code Plugin](https://axiomatics.github.io/alfa-vscode-doc/). The compiled representation of the policies are available in xacml-pdp/pdp/conf/policies/ and loaded by the PDP at startup.
@@ -146,5 +179,6 @@ This should return the response below that includes an obligation.
 - Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server
 - [OASIS eXtensible Access Control Markup Language (XACML) TC](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
 - More details on [Abbreviated Language For Authorization (ALFA)](https://en.wikipedia.org/wiki/ALFA_(XACML))
+- [Curity Identity Server GraphQL APIs](https://curity.io/docs/idsvr/latest/developer-guide/graphql/index.html)
 
 Copyright (C) 2022 Curity AB.

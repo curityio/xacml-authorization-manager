@@ -863,10 +863,15 @@ COMMENT ON COLUMN public.tokens.claims IS 'Optional JSON-blob that contains a li
 -- Data for Name: accounts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.accounts (account_id, username, password, email, phone, attributes, active, created, updated) FROM stdin;
-c02d2dde-ee25-11eb-9535-0242ac130005	demouser	$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69	demo@user.com	\N	{"name": {"givenName": "Demo", "familyName": "User"}, "emails": [{"value": "demo@user.com", "primary": true}], "agreeToTerms": "on", "urn:se:curity:scim:2.0:Devices": []}	1	1627313147	1627313147
-c02d2dde-ee25-11eb-9535-0242ac130003	admin	$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69	admin@example.com	\N	{"name": {"givenName": "Admin", "familyName": "Super"}, "groups":["admin"], "emails": [{"value": "admin@example.com", "primary": true}], "agreeToTerms": "on", "urn:se:curity:scim:2.0:Devices": []}	1	1627313147	1627313147
-\.
+-- COPY public.accounts (account_id, username, password, email, phone, attributes, active, created, updated) FROM stdin;
+-- c02d2dde-ee25-11eb-9535-0242ac130005	demouser	$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69	demo@user.com	"555-123-1234"	{"name": {"givenName": "Demo", "familyName": "User"}, "groups":["devops"], "emails": [{"value": "demo@user.com", "primary": true}], "agreeToTerms": "on", "urn:se:curity:scim:2.0:Devices": []}	1	1627313147	1627313147
+-- c02d2dde-ee25-11eb-9535-0242ac130003	admin	$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69	admin@example.com	"555-321-4321"	{"name": {"givenName": "Admin", "familyName": "Super"}, "groups":["admin"], "emails": [{"value": "admin@example.com", "primary": true}], "agreeToTerms": "on", "urn:se:curity:scim:2.0:Devices": []}	1	1627313147	1627313147
+-- \.
+
+INSERT INTO public.accounts (account_id, username, password, email, phone, attributes, active, created, updated) VALUES ('d45316fc-174b-11ed-8dda-0242ac150002', 'demouser', '$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69', 'demo@example.com', '7687686', '{"name": {"givenName": "demo", "familyName": "user"}, "groups":["devops"], "emails": [{"value": "alice@example.com", "primary": true}], "phoneNumbers": [{"value": "7687686", "primary": true}], "urn:se:curity:scim:2.0:Devices": []}', 1, 1659984997, 1659984997);
+INSERT INTO public.accounts (account_id, username, password, email, phone, attributes, active, created, updated) VALUES ('d45316fc-174b-11ed-8dda-0242ac150003', 'admin', '$5$rounds=20000$zXoLTfTLXOUevIIf$xKoU.9qf6qj24vmCp3Jm/R915tcOTzUdp7jRqd9YP69', 'admin@example.com', '99999', '{"name": {"givenName": "admin", "familyName": "super"}, "groups":["admin"], "emails": [{"value": "david@example.com", "primary": true}], "phoneNumbers": [{"value": "7687686", "primary": true}], "urn:se:curity:scim:2.0:Devices": []}', 1, 1659984997, 1659984997);
+
+
 
 
 --

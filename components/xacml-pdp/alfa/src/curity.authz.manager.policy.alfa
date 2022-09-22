@@ -11,7 +11,7 @@ namespace authz.manager.curity.io{
 
             /*Policy that only returns permit but requires a very explicit access request for admin*/
             policy admin{
-                target clause group == "admin"
+                target clause group == "[admin]"
 
                 apply firstApplicable
 
@@ -38,7 +38,7 @@ namespace authz.manager.curity.io{
 
             /*Policy that returns permit with obligation*/
             policy devops{
-                target clause group == "devops"
+                target clause group == "[devops]"
 
                 apply firstApplicable
 
@@ -62,7 +62,7 @@ namespace authz.manager.curity.io{
 
             /*Policy that only returns permit but requires a very explicit access request for admin*/
             policy admin{
-                target clause group == "admin"
+                target clause group == "[admin]"
 
                 apply firstApplicable
 
@@ -89,7 +89,7 @@ namespace authz.manager.curity.io{
 
             /* Policy that returns permit with obligation */
             policy devops{
-                target clause group == "devops"
+                target clause group == "[devops]"
 
                 apply firstApplicable
 
