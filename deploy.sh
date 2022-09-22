@@ -30,7 +30,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # This is for Curity developers only
 #
 cp ./components/idsvr/pre-commit ./.git/hooks
-
+cp ./components/xacml-pdp/alfa/src/src-gen/*.xml ./components/xacml-pdp/pdp/conf/policies/
 
 mvn clean
 mvn package

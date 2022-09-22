@@ -61,7 +61,7 @@ public final class XACMLAuthorizationManagerPlugin implements GraphQLAuthorizati
             ContextAttributes contextAttributes) {
 
         String subject = subjectAttributes.getSubject();
-        String group = subjectAttributes.get("groups").getValue().toString();
+        String group = subjectAttributes.get("group").getValue().toString();
         String action = "POST"; //Hard-coded, graphQLAuthorizationActionAttributes does not yet contain the method
         String resource = graphQLAuthorizationResourceAttributes.get("resourceType").getValue().toString();
 
