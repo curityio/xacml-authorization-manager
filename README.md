@@ -9,7 +9,7 @@ A prototype Authorization Manager written in Java using an external [XACML (eXte
 
 ## Introduction
 
-The Curity Identity Server can leverage Authorization Managers to control access to exposed GraphQL APIs for DCR and User Management. Authorization Managers can be custom built using the [Curity Java Plugin SDK](https://curity.io/docs/idsvr-java-plugin-sdk/latest/). This is an example of a custom Authorization manager that acts as a [Policy Enforcement Point (PEP)](https://curity.io/resources/learn/entitlement-management-system/#the-policy-enforcement-point) in a XACML architecture. The XACML Authorization Manager sends a JSON formatted request to a configured PDP that holds a policy. The PDP responds with a decision or optionally with obligations. The XACML Authorization Manager handles the respons and allows/denies access to the requested resource. The XACML Authorization Manager can also filter data and based on the policy in use by the PDP can allow access to the resource but deny access to specific fields within that resource.
+The Curity Identity Server can leverage Authorization Managers to control access to exposed GraphQL APIs for DCR and User Management. Authorization Managers can be custom built using the [Curity Java Plugin SDK](https://curity.io/docs/idsvr-java-plugin-sdk/latest/). This is an example of a custom Authorization manager that acts as a [Policy Enforcement Point (PEP)](https://curity.io/resources/learn/entitlement-management-system/#the-policy-enforcement-point) in a XACML architecture. The XACML Authorization Manager sends a JSON formatted request to a configured PDP that holds a policy. The PDP responds with a decision or optionally with obligations. The XACML Authorization Manager handles the response and allows/denies access to the requested resource. The XACML Authorization Manager can also filter data and based on the policy in use by the PDP can allow access to the resource but deny access to specific fields within that resource.
 
 ## Building the Plugin
 
@@ -46,9 +46,11 @@ set processing authorization-managers authorization-manager my-xacml-authz-manag
 When committed, the Authorization Manager is avialble to be used throughout the Curoity Identity Server.
 
 ### DCR GraphQL API
+
 In order to protect the DCR GraphQL API the Authorization Manager needs to be added to the Token Service Profile. Navigate to `Token Service` -> `General`, in the drop-down for Authorization Manager, choose the newly created Authorization Manager (`my-xacml-authz-manager` in the example above).
 
 ### User Management GraphQL API
+
 In order to protect the User Management GraphQL API the Authorization Manager needs to be added to the User Management Profile. Navigate to `User Management` -> `General`, in the drop-down for Authorization Manager, choose the newly created Authorization Manager (`my-xacml-authz-manager` in the example above).
 
 ## Testing
@@ -59,8 +61,8 @@ A scipt is available that will build and deploy the XACML Authorization Manager 
 
 **NOTE** DEBUG logging is enabled for the Curity Identity Server and the XACML PDP.
 
-1. Using [OAUth.tools](https://oauth.tools/), initiate a code flow using the `xacml-demo` client (secret is `Password1`).
-2. Log in with a user, `admin` or `demouser` (by default both have the password `Password1`). The `admin` user belongs to the group `admin` that has full access to the GraphQL APIs. The `demouser` belongs to the `devops` group that is subject to filtration of certain fields for both DCR and User Management data. This should be clear when reviewing the policy used by the XACML PDP. Note that the group cliam is issued by default per the configuration.
+1. Using [OAuth.tools](https://oauth.tools/), initiate a code flow using the `xacml-demo` client (secret is `Password1`).
+2. Log in with a user, `admin` or `demouser` (by default both have the password `Password1`). The `admin` user belongs to the group `admin` that has full access to the GraphQL APIs. The `demouser` belongs to the `devops` group that is subject to filtration of certain fields for both DCR and User Management data. This should be clear when reviewing the policy used by the XACML PDP. Note that the group claim is issued by default per the configuration.
 3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or GraphiQL, construct a query and add the JWT in the `Authorize` header.
 
 ### Example User Query
@@ -104,9 +106,11 @@ DCR Policies are defined and grouped by the `graphQLDCR` policyset where the PDP
 If the user has `group == "admin"`, access is permitted to all different possible actions (GET, POST, etc.). If the user instead belongs to the `devops` group, access is only permitted for a `POST` request. Access is also limited by obligations that are returned as part of the response from the PDP for the `POST` action. 
 
 #### User Management Policies
+
 Access to the User Management API is defined in the `graphQLUM` policyset. The structure is very similar to the `graphQLDCR` policyset. Here, the `phoneNumbers` and `name` fields are filtered for users in the `devops` group.
 
 #### Sample Request/Response
+
 To test the PDP alone without the involmenet of the Authorization Manager a sample request can be sent using for example Postman.
 
 ```json
