@@ -111,7 +111,7 @@ Access to the User Management API is defined in the `graphQLUM` policyset. The s
 
 #### Sample Request/Response
 
-To test the PDP alone without the involmenet of the Authorization Manager a sample request can be sent using for example Postman.
+To test the PDP alone without the involvement of the Authorization Manager a sample request can be sent using for example Postman.
 
 ```json
 POST /services/pdp HTTP/1.1
