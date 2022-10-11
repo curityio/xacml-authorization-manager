@@ -74,6 +74,7 @@ A scipt is available that will build and deploy the XACML Authorization Manager 
 3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or GraphiQL, construct a query and add the JWT in the `Authorize` header.
 
 ### Example User Query
+
 ```json
 query getAccounts
 {
@@ -103,6 +104,7 @@ query getAccounts
 ```
 
 ### XACML Policies
+
 The policies are written in [ALFA](https://en.wikipedia.org/wiki/ALFA_(XACML)) and available in xacml-pdp/alfa. They are compiled into XACML artifacts using a [Visual Studio Code Plugin](https://axiomatics.github.io/alfa-vscode-doc/). The compiled representation of the policies are available in xacml-pdp/pdp/conf/policies/ and loaded by the PDP at startup.
 
 **NOTE**: The ALFA representation of the policies are much easier to read than the XACML artifacts.
