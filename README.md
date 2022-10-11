@@ -11,6 +11,8 @@ A prototype Authorization Manager written in Java using an external [XACML (eXte
 
 The Curity Identity Server can leverage Authorization Managers to control access to exposed GraphQL APIs for DCR and User Management. Authorization Managers can be custom built using the [Curity Java Plugin SDK](https://curity.io/docs/idsvr-java-plugin-sdk/latest/). This is an example of a custom Authorization manager that acts as a [Policy Enforcement Point (PEP)](https://curity.io/resources/learn/entitlement-management-system/#the-policy-enforcement-point) in a XACML architecture. The XACML Authorization Manager sends a JSON formatted request to a configured PDP that holds a policy. The PDP responds with a decision or optionally with obligations. The XACML Authorization Manager handles the response and allows/denies access to the requested resource. The XACML Authorization Manager can also filter data and based on the policy in use by the PDP can allow access to the resource but deny access to specific fields within that resource.
 
+Additional details related to this plugin and to Authorization Managers in general is available in this [XACML Authorization Manager]](https://curity.io/resources/learn/xacml-authorization-manager/) article.
+
 ## Building the Plugin
 
 Build the plugin by issuing the command `mvn package`. This will produce a JAR file in the `target/xacml-authorization-manager` directory, which can be installed.
@@ -27,12 +29,18 @@ For a list of the dependencies and their versions, run `mvn dependency:list`. En
 
 ## Configuring the Plugin
 
-The plugin needs an HttpClient, which currently has to be set using the Curity Identity Server CLI. First create an Http client, e.g. xacml-http-client, then execute the following command to create the XACML Authorization Manager and set the HttpClient.
+The plugin needs an HttpClient, which currently has to be set using the Curity Identity Server CLI. First create an Http client, e.g. xacml-http-client, then execute the following commands to create the XACML Authorization Manager and set the HttpClient.
 
 **NOTE:** This creates a XACML Authorization Manager with the ID `my-xacml-authz-manager`.
 
 ```sh
-set processing authorization-managers authorization-manager my-xacml-authz-manager xacml-authorization-manager http-client id xacml-http-client
+idsh
+configure
+edit processing authorization-managers authorization-manager my-xacml-authz-manager xacml-authorization-manager
+set http-client id xacml-http-client
+set pdphost xacml-pdp
+set pdpport 8080
+set pdppath /services/pdp
 ```
 
 ### The configuration parameters
@@ -43,7 +51,7 @@ set processing authorization-managers authorization-manager my-xacml-authz-manag
 | `PDP Port`  | String | The port that the XACML PDP is exposing its service on.  | `8443` | `8080` |
 | `PDP Path`  | String | The path of the XACML PDP that accepts authorization requests. | `/pdp` |  `/services/pdp` |
 
-When committed, the Authorization Manager is avialble to be used throughout the Curoity Identity Server.
+When committed, the Authorization Manager is avialble to be used throughout the Curity Identity Server.
 
 ### DCR GraphQL API
 
@@ -147,7 +155,7 @@ Content-Type: application/xacml+json
 }
 ```
 
-This should return the response below that includes an obligation.
+This should return the response below from the PDP that includes an obligation. The obligation itself is defined in the policy and in this case indicates what fields that the Authorization Manager should filter, i.e. `name` and `phoneNumbers`.
 
 ```json
 {
@@ -184,5 +192,7 @@ This should return the response below that includes an obligation.
 - [OASIS eXtensible Access Control Markup Language (XACML) TC](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
 - More details on [Abbreviated Language For Authorization (ALFA)](https://en.wikipedia.org/wiki/ALFA_(XACML))
 - [Curity Identity Server GraphQL APIs](https://curity.io/docs/idsvr/latest/developer-guide/graphql/index.html)
+- [User Management with GraphQL](https://curity.io/resources/learn/graphql-user-management/)
+- [Authorizing Access to User Data](https://curity.io/resources/learn/authorizing-user-access/)
 
 Copyright (C) 2022 Curity AB.
