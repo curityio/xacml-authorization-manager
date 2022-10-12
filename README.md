@@ -71,7 +71,7 @@ A scipt is available that will build and deploy the XACML Authorization Manager 
 
 1. Using [OAuth.tools](https://oauth.tools/), initiate a code flow using the `xacml-demo` client (secret is `Password1`).
 2. Log in with a user, `admin` or `demouser` (by default both have the password `Password1`). The `admin` user belongs to the group `admin` that has full access to the GraphQL APIs. The `demouser` belongs to the `devops` group that is subject to filtration of certain fields for both DCR and User Management data. This should be clear when reviewing the policy used by the XACML PDP. Note that the group claim is issued by default per the configuration.
-3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or GraphiQL, construct a query and add the JWT in the `Authorize` header.
+3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or Insomnia, construct a query and add the JWT in the `Authorize` header.
 
 ### Example User Query
 
