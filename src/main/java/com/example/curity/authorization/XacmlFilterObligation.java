@@ -20,7 +20,7 @@ class XacmlFilterObligation implements GraphQLObligation.CanReadAttributes {
             String fieldToFilter = obligation.getString("AttributeId");
             Boolean filter = obligation.getBoolean("Value");
 
-            if(filter)
+            if(!filter) //if the obligation is false access is not allowed to the field and should be filtered from the response
             {
                 _attributesToFilter.add(fieldToFilter);
             }

@@ -36,5 +36,5 @@ namespace authz.manager.curity.io {
         category = resourceCat
     }
 
-    obligation curityFilters = "curity-filters"
+    obligation curityFilters = "curity-is-access-to-field-allowed"
 }

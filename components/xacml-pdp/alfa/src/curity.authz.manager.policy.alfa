@@ -47,7 +47,7 @@ namespace authz.manager.curity.io{
                     permit
                     on permit {
                         obligation curityFilters{
-                            status = true
+                            status = false
                         }   
                     }
                 }
@@ -98,8 +98,8 @@ namespace authz.manager.curity.io{
                     permit
                     on permit {
                         obligation curityFilters{
-                            phoneNumbers = true
-                            name = true
+                            phoneNumbers = false
+                            name = false
                         }   
                     }
                 }
