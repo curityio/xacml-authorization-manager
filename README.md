@@ -29,19 +29,7 @@ For a list of the dependencies and their versions, run `mvn dependency:list`. En
 
 ## Configuring the Plugin
 
-The plugin needs an HttpClient, which currently has to be set using the Curity Identity Server CLI. First create an Http client, e.g. xacml-http-client, then execute the following commands to create the XACML Authorization Manager and set the HttpClient.
-
-**NOTE:** This creates a XACML Authorization Manager with the ID `my-xacml-authz-manager`.
-
-```sh
-idsh
-configure
-edit processing authorization-managers authorization-manager my-xacml-authz-manager xacml-authorization-manager
-set http-client id xacml-http-client
-set pdphost xacml-pdp
-set pdpport 8080
-set pdppath /services/pdp
-```
+The plugin needs an HttpClient, host, port and path configured in order to communicate with the XACML PDP.
 
 ### The configuration parameters
 | Name | Type | Description | Example | Default |
@@ -51,7 +39,7 @@ set pdppath /services/pdp
 | `PDP Port`  | String | The port that the XACML PDP is exposing its service on.  | `8443` | `8080` |
 | `PDP Path`  | String | The path of the XACML PDP that accepts authorization requests. | `/pdp` |  `/services/pdp` |
 
-When committed, the Authorization Manager is avialble to be used throughout the Curity Identity Server.
+When committed, the Authorization Manager is available to be used throughout the Curity Identity Server.
 
 ### DCR GraphQL API
 
@@ -65,13 +53,13 @@ In order to protect the User Management GraphQL API the Authorization Manager ne
 
 The repository contains a docker compose file that will run an instance of the Curity Identity Server, a data source with test data and an [AuthzForce XACML PDP](https://github.com/authzforce/restful-pdp). Running this environment will provide a fully configured environment that can be used to test the use cases and the plugin.
 
-A scipt is available that will build and deploy the XACML Authorization Manager Plugin and start the docker containers. Run `/deploy.sh` to get everything up and running. Run `./teardown.sh` to stop and remove all the containers.
+A script is available that will build and deploy the XACML Authorization Manager Plugin and start the docker containers. Run `/deploy.sh` to get everything up and running. Run `./teardown.sh` to stop and remove all the containers.
 
 **NOTE** DEBUG logging is enabled for the Curity Identity Server and the XACML PDP.
 
 1. Using [OAuth.tools](https://oauth.tools/), initiate a code flow using the `xacml-demo` client (secret is `Password1`).
 2. Log in with a user, `admin` or `demouser` (by default both have the password `Password1`). The `admin` user belongs to the group `admin` that has full access to the GraphQL APIs. The `demouser` belongs to the `devops` group that is subject to filtration of certain fields for both DCR and User Management data. This should be clear when reviewing the policy used by the XACML PDP. Note that the group claim is issued by default per the configuration.
-3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or Insomnia, construct a query and add the JWT in the `Authorize` header.
+3. The JWT that is obtained from running the code flow can be used in a call to either of the GraphQL APIs. Using for example Postman or Insomnia, construct a query and add the JWT in the `Authorization` header.
 
 ### Example User Query
 
@@ -105,9 +93,9 @@ query getAccounts
 
 ### XACML Policies
 
-The policies are written in [ALFA](https://en.wikipedia.org/wiki/ALFA_(XACML)) and available in xacml-pdp/alfa. They are compiled into XACML artifacts using a [Visual Studio Code Plugin](https://axiomatics.github.io/alfa-vscode-doc/). The compiled representation of the policies are available in xacml-pdp/pdp/conf/policies/ and loaded by the PDP at startup.
+The policies are written in [ALFA](https://en.wikipedia.org/wiki/ALFA_(XACML)) and available in xacml-pdp/alfa. They are compiled into XACML artifacts using a [Visual Studio Code Plugin](https://axiomatics.github.io/alfa-vscode-doc/). The compiled representation of the policies is available in xacml-pdp/pdp/conf/policies/ and loaded by the PDP at startup.
 
-**NOTE**: The ALFA representation of the policies are much easier to read than the XACML artifacts.
+**NOTE**: The ALFA representation of the policies is much easier to read than the XACML artifacts.
 
 #### DCR Policies
 
