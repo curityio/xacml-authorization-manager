@@ -21,8 +21,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.curityVersion>7.3.1</project.curityVersion>
-        <project.slf4jVersion>1.7.36</project.slf4jVersion>
+        <project.curityVersion>8.5.2</project.curityVersion>
+        <project.slf4jVersion>2.0.3</project.slf4jVersion>
     </properties>
 
     <build>
@@ -78,17 +78,17 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20230227</version>
+            <version>20231013</version>
         </dependency>
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>2.1.1</version>
+            <version>2.1.2</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.parsson</groupId>
             <artifactId>jakarta.json</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.4</version>
         </dependency>
     </dependencies>
 </project>
